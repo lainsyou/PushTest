@@ -34,12 +34,12 @@ self.addEventListener('activate', event => {
     event.waitUntil(
         caches.keys().then((cacheNames) => {
             return cacheNames.filter((cacheName) => {
-                // STATIC_CACHE_KEY‚Å‚Í‚È‚¢ƒLƒƒƒbƒVƒ…‚ğ’T‚·
+                // STATIC_CACHE_KEYã§ã¯ãªã„ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’æ¢ã™
                 return cacheName !== STATIC_CACHE_KEY;
             });
             }).then((cachesToDelete) => {
             return Promise.all(cachesToDelete.map((cacheName) => {
-                // ‚¢‚ç‚È‚¢ƒLƒƒƒbƒVƒ…‚ğíœ‚·‚é
+                // ã„ã‚‰ãªã„ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’å‰Šé™¤ã™ã‚‹
                 return caches.delete(cacheName);
             }));
         })
@@ -47,7 +47,7 @@ self.addEventListener('activate', event => {
 });
  
 self.addEventListener('fetch', event => {
-    // POST‚Ìê‡‚ÍƒLƒƒƒbƒVƒ…‚ğg—p‚µ‚È‚¢
+    // POSTã®å ´åˆã¯ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’ä½¿ç”¨ã—ãªã„
     if ('POST' === event.request.method) {
         return;
     }
@@ -55,26 +55,26 @@ self.addEventListener('fetch', event => {
     event.respondWith(
         caches.match(event.request)
         .then((response) => {
-            // ƒLƒƒƒbƒVƒ…“à‚ÉŠY“–ƒŒƒXƒ|ƒ“ƒX‚ª‚ ‚ê‚ÎA‚»‚ê‚ğ•Ô‚·
+            // ã‚­ãƒ£ãƒƒã‚·ãƒ¥å†…ã«è©²å½“ãƒ¬ã‚¹ãƒãƒ³ã‚¹ãŒã‚ã‚Œã°ã€ãã‚Œã‚’è¿”ã™
             if (response) {
                 return response;
             }
  
-          // d—vFƒŠƒNƒGƒXƒg‚ğ clone ‚·‚éBƒŠƒNƒGƒXƒg‚Í Stream ‚È‚Ì‚Å
-          // ˆê“x‚µ‚©ˆ—‚Å‚«‚È‚¢B‚±‚±‚Å‚ÍƒLƒƒƒbƒVƒ…—pAfetch —p‚Æ2‰ñ
-          // •K—v‚È‚Ì‚ÅAƒŠƒNƒGƒXƒg‚Í clone ‚µ‚È‚¢‚Æ‚¢‚¯‚È‚¢
+          // é‡è¦ï¼šãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚’ clone ã™ã‚‹ã€‚ãƒªã‚¯ã‚¨ã‚¹ãƒˆã¯ Stream ãªã®ã§
+          // ä¸€åº¦ã—ã‹å‡¦ç†ã§ããªã„ã€‚ã“ã“ã§ã¯ã‚­ãƒ£ãƒƒã‚·ãƒ¥ç”¨ã€fetch ç”¨ã¨2å›
+          // å¿…è¦ãªã®ã§ã€ãƒªã‚¯ã‚¨ã‚¹ãƒˆã¯ clone ã—ãªã„ã¨ã„ã‘ãªã„
             let fetchRequest = event.request.clone();
  
             return fetch(fetchRequest)
             .then((response) => {
                 if (!response || response.status !== 200 || response.type !== 'basic') {
-                    // ƒLƒƒƒbƒVƒ…‚·‚é•K—v‚Ì‚È‚¢ƒ^ƒCƒv‚ÌƒŒƒXƒ|ƒ“ƒX‚È‚ç‚»‚Ì‚Ü‚Ü•Ô‚·
+                    // ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã™ã‚‹å¿…è¦ã®ãªã„ã‚¿ã‚¤ãƒ—ã®ãƒ¬ã‚¹ãƒãƒ³ã‚¹ãªã‚‰ãã®ã¾ã¾è¿”ã™
                     return response;
                 }
  
-                // d—vFƒŒƒXƒ|ƒ“ƒX‚ğ clone ‚·‚éBƒŒƒXƒ|ƒ“ƒX‚Í Stream ‚Å
-                // ƒuƒ‰ƒEƒU—p‚ÆƒLƒƒƒbƒVƒ…—p‚Ì2‰ñ•K—vB‚È‚Ì‚Å clone ‚µ‚Ä
-                // 2‚Â‚Ì Stream ‚ª‚ ‚é‚æ‚¤‚É‚·‚é
+                // é‡è¦ï¼šãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚’ clone ã™ã‚‹ã€‚ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã¯ Stream ã§
+                // ãƒ–ãƒ©ã‚¦ã‚¶ç”¨ã¨ã‚­ãƒ£ãƒƒã‚·ãƒ¥ç”¨ã®2å›å¿…è¦ã€‚ãªã®ã§ clone ã—ã¦
+                // 2ã¤ã® Stream ãŒã‚ã‚‹ã‚ˆã†ã«ã™ã‚‹
                 let responseToCache = response.clone();
  
                 caches.open(STATIC_CACHE_KEY)
