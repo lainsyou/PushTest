@@ -1,0 +1,29 @@
+{
+    "short_name": "PushTest",
+    "name": "PushTest",
+    "display": "standalone",
+    "orientation": "any",
+    "start_url": "index.html",
+    "icons": [
+        {
+            "src": "icon72.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        },
+        {
+            "src": "icon144.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
+            "src": "icon152.png",
+            "sizes": "152x152",
+            "type": "image/png"
+        },
+        {
+            "src": "icon192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ]
+}
